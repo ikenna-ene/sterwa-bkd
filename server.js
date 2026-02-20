@@ -111,7 +111,6 @@ app.post("/api/auth/login", async (req, res) => {
     //user: user
     user: {
       username: user.username,
-      email: user.email,
       bal: user.balData.bal,
       profit: user.balData.profit
     }
