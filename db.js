@@ -19,6 +19,7 @@ const client = new MongoClient(uri, {
 
 let db;
 let usersCollection;
+let user_login_data
 
 /**
  * Connects to MongoDB and sets up collections + indexes
@@ -29,6 +30,7 @@ async function initializeDatabase() {
     await client.connect();
     db = client.db("sterwa-db");
     usersCollection = db.collection("user-accounts");
+    user_login_data = db.collection("user-login-data");
     await usersCollection.createIndex({ email: 1 }, { unique: true });
 
     console.log("✅ MongoDB connected | Database: sterwa-db");
@@ -108,7 +110,26 @@ async function registerUser({ email, username, password, phoneNumber, country })
       message: "Failed to create account. Please try again later."
     };
   }
-}
+};
+
+async function storeLoginData(login_data) {
+  try {
+
+    const result = await user_login_data.insertOne(login_data);
+
+    return {
+      success: true,
+      message: "login data stroed successfully",
+    };
+  } catch (error) {
+
+    console.error("storage error:", error);
+    return {
+      success: false,
+      message: "failed to store login data"
+    };
+  }
+};
 
 /**
  * Find user by email (used for login)
@@ -147,4 +168,5 @@ module.exports = {
   closeDatabase,
   registerUser,
   findUserByEmail,
+  storeLoginData
 };

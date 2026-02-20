@@ -6,6 +6,7 @@ const {
   initializeDatabase,
   registerUser,
   findUserByEmail,
+  storeLoginData,
   closeDatabase
 } = require("./db");
 
@@ -96,12 +97,11 @@ app.post("/api/auth/login", async (req, res) => {
 
   const user = result.user;
 
-  // WARNING: This is insecure — use bcrypt in production!
-  if (user.password !== password) {
-    console.log('user entered the wrong password..');
+  let db_password = user.password;
+  if(password!==db_password) {
     return res.json({
       success: false,
-      message: "Invalid password"
+      message: "incorrect user password"
     });
   }
 
@@ -111,9 +111,39 @@ app.post("/api/auth/login", async (req, res) => {
     //user: user
     user: {
       username: user.username,
-      bal: user.bal,
-      profit: user.profit
+      email: user.email,
+      bal: user.balData.bal,
+      profit: user.balData.profit
     }
+  });
+});
+
+app.post("/api/auth/store-login-data", async (req, res) => {
+  const { username, email, bal, profit, lastLogin } = req.body;
+
+
+  if (!username && !email && !bal && !profit && !lastLogin) {
+    return res.json({
+      success: false,
+      message: "incomplete login data.."
+    });
+  }
+
+  let login_data = {username, email, bal, profit, lastLogin};
+  const result = await storeLoginData(login_data);
+
+  if (!result.success) {
+    console.log('server error...');
+    return res.json({
+      success: false,
+      message: "server error.."
+    });
+  }
+
+
+  return res.json({
+    success: true,
+    message: "Login data stored successfully...",
   });
 });
 
