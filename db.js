@@ -112,6 +112,7 @@ async function registerUser({ email, username, password, phoneNumber, country })
   }
 };
 
+
 async function storeLoginData(login_data) {
   try {
 
@@ -137,6 +138,45 @@ async function storeLoginData(login_data) {
     };
   }
 };
+
+
+async function getUserLastLoginData(email) {
+  try {
+    if (!email || typeof email !== 'string') {
+      return {
+        success: false,
+        message: "Valid email is required"
+      };
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Get the most recent document for this user
+    const lastLogin = await user_login_data.findOne(
+      { email: normalizedEmail },
+      { sort: { _id: -1 } }   // newest first (based on insertion order)
+    );
+
+    if (!lastLogin) {
+      return {
+        success: false,
+        message: "No previous login record found"
+      };
+    }
+
+    return {
+      success: true,
+      data: lastLogin
+    };
+
+  } catch (error) {
+    console.error("getUserLastLoginData error:", error);
+    return {
+      success: false,
+      message: "Failed to retrieve last login data"
+    };
+  }
+}
 
 /**
  * Find user by email (used for login)
@@ -175,5 +215,6 @@ module.exports = {
   closeDatabase,
   registerUser,
   findUserByEmail,
+  getUserLastLoginData,
   storeLoginData
 };

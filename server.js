@@ -7,6 +7,7 @@ const {
   registerUser,
   findUserByEmail,
   storeLoginData,
+  getUserLastLoginData,
   closeDatabase
 } = require("./db");
 
@@ -103,6 +104,29 @@ app.post("/api/auth/login", async (req, res) => {
       success: false,
       message: "incorrect user password"
     });
+  };
+
+  let user_login_data  = await getUserLastLoginData(email); let bal_diff;
+  //console.log(user_login_data)
+  if(user_login_data) {
+    bal_diff = user.balData.bal - user_login_data.data.bal;
+  } else {
+    console.log(user_login_data.message)
+  }
+
+
+  if(bal_diff>0) {
+    return res.json({
+      success: true,
+      message: "Login successful",
+      //user: user
+      user: {
+        username: user.username,
+        bal: user.balData.bal,
+        profit: user.balData.profit,
+        ballDiff: bal_diff
+      }
+    });
   }
 
   return res.json({
@@ -145,6 +169,10 @@ app.post("/api/auth/store-login-data", async (req, res) => {
     message: "Login data stored successfully...",
   });
 });
+
+//check for price update
+//get user data from user collection and get the last login data
+//if the bal in user-data is greater than the last login data, return the difference
 
 // Export the app so index.js can use it
 module.exports = { app, initializeDatabase, closeDatabase };
