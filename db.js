@@ -3,7 +3,7 @@ process.env.TZ = 'Africa/Lagos';
 const { MongoClient } = require("mongodb");
 
 const uri = process.env.MONGODB_URI ||
-  "mongodb+srv://ene_db:ene_db@cluster0.b5aptjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "";
 
 if (!uri) {
   throw new Error("MONGODB_URI environment variable not set.");
