@@ -56,13 +56,17 @@ app.post("/api/auth/signup", async (req, res) => {
 
 
   const result = await registerUser({ email, username, password, phoneNumber, country });
+  const user = result.user;
 
   if (result.success) {
     console.log('new account created on: ', );
     return res.json({
       success: true,
       message: "Account created successfully",
-      user: result.user
+      user: {
+        username: user.username,
+        bal: user.bal
+      }
     });
   }
 
