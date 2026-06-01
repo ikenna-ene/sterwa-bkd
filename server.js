@@ -35,7 +35,7 @@ app.get("/health", (req, res) => {
 // ────────────────────────────────────────────────
 app.post("/api/auth/signup", async (req, res) => {
   const { email, username, password, phone, country } = req.body;
-
+  console.log(req.body);
   if (!email || !username || !password) {
     return res.json({
       success: false,
