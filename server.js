@@ -65,7 +65,8 @@ app.post("/api/auth/signup", async (req, res) => {
       message: "Account created successfully",
       user: {
         username: user.username,
-        bal: user.bal
+        bal: user.bal,
+        portfolio: user.portfolio,
       }
     });
   }
@@ -138,6 +139,7 @@ app.post("/api/auth/login", async (req, res) => {
         email: user.email,
         bal: user.balData.bal,
         profit: user.balData.profit,
+        portfolio: portfolio,
         ballDiff: bal_diff
       }
     });
@@ -151,7 +153,8 @@ app.post("/api/auth/login", async (req, res) => {
       username: user.username,
       email: user.email,
       bal: user.balData.bal,
-      profit: user.balData.profit
+      profit: user.balData.profit,
+      portfolio: portfolio
     }
   });
 });
