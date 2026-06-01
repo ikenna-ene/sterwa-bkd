@@ -55,7 +55,7 @@ app.post("/api/auth/signup", async (req, res) => {
   }
 
 
-  const result = await registerUser({ email, username, password, phoneNumber, country });
+  const result = await registerUser({ email, username, password, phone, country });
   const user = result.user;
 
   if (result.success) {
