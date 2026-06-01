@@ -71,10 +71,9 @@ async function closeDatabase() {
  */
 async function registerUser({ email, username, password, phone, country }) {
   try {
-
-    const normalizedEmail = email.toLowerCase().trim();
+    console.log(email.toLowerCase())
     const result = await usersCollection.insertOne({
-      email: email,
+      email: email.toLowerCase(),
       username: username,
       password,               // WARNING: Hash this in production!
       phone: phone,
@@ -149,11 +148,11 @@ async function getUserLastLoginData(email) {
       };
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
+    //const normalizedEmail = email.toLowerCase().trim();
 
     // Get the most recent document for this user
     const lastLogin = await user_login_data.findOne(
-      { email: normalizedEmail },
+      { email: email.toLowerCase() },
       { sort: { _id: -1 } }   // newest first (based on insertion order)
     );
 
@@ -186,7 +185,7 @@ async function getUserLastLoginData(email) {
 async function findUserByEmail(email) {
   try {
     const user = await usersCollection.findOne({
-      email: email.toLowerCase().trim()
+      email: email.toLowerCase()
     });
 
     if (!user) {
