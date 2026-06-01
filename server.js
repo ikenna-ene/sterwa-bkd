@@ -112,7 +112,7 @@ app.post("/api/auth/login", async (req, res) => {
     });
   };
 
-  let user_login_data  = await getUserLastLoginData(email); let bal_diff;
+  /*let user_login_data  = await getUserLastLoginData(email); let bal_diff;
   //console.log(user_login_data)
   if(user_login_data.success == true) {
     console.log("user login data:\n", user_login_data.data)
@@ -121,17 +121,17 @@ app.post("/api/auth/login", async (req, res) => {
     bal_diff = user.balData.bal - user_login_data.data.bal;
   } else {
     console.log('No previous login data found for:', email);
-  }
+  }*/
 
   console.log({
     username: user.username,
     email: user.email,
     bal: user.balData.bal,
     profit: user.balData.profit,
-    ballDiff: bal_diff
+    //ballDiff: bal_diff
   })
 
-  if(bal_diff>0) {
+  /*if(bal_diff>0) {
 
     return res.json({
       success: true,
@@ -145,7 +145,7 @@ app.post("/api/auth/login", async (req, res) => {
         ballDiff: bal_diff
       }
     });
-  }
+  }*/
 
   return res.json({
     success: true,
