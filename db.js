@@ -83,6 +83,12 @@ async function registerUser({ email, username, password, phone, country }) {
         bal: 0,
         profit: 0,
         dateUpdated: ''
+      },
+      portfolio: {
+        commodities: {value: "0", yield: "0.0%", change: "0.0%" },
+        stocks: {value: "0", yield: "0.0%", change: "0.0%" },
+        savings: {value: "0", yield: "0.0%", change: "0.0%" },
+        crypto: {value: "0", yield: "0.0%", change: "0.0%" }
       }
     });
 
