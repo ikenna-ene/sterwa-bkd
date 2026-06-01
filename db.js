@@ -80,8 +80,8 @@ async function registerUser({ email, username, password, phone, country }) {
       country: country,
       createdAt: new Date(),
       balData: {
-        bal: 0,
-        profit: 0,
+        bal: "0",
+        profit: "0",
         dateUpdated: ''
       },
       portfolio: {
@@ -98,7 +98,7 @@ async function registerUser({ email, username, password, phone, country }) {
       user: {
         id: result.insertedId.toString(),
         username: username,
-        bal: 0,
+        bal: "0",
         portfolio: {
           commodities: {value: "0", yield: "0.0%", change: "0.0%" },
           stocks: {value: "0", yield: "0.0%", change: "0.0%" },
