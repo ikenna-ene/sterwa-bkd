@@ -118,14 +118,9 @@ app.post("/api/auth/login", async (req, res) => {
     console.log("user login data:\n", user_login_data.data)
     console.log(user.balData.bal, user_login_data.data.bal);
     if(user.balData.bal && user_login_data.data.bal);
-    bal_diff = user.balData.bal - user_login_data.data.bal;
-    console.log({
-      username: user.username,
-      email: user.email,
-      bal: user.balData.bal,
-      profit: user.balData.profit,
-      ballDiff: bal_diff
-    })
+    bal_diff = Number(user.balData.bal) - Number(user_login_data.data.bal);
+    console.log('bal difference: \n', bal_diff)
+
   } else {
     console.log('No previous login data found for:', email);
   }
