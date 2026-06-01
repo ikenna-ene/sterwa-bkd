@@ -152,7 +152,7 @@ async function getUserLastLoginData(email) {
 
     // Get the most recent document for this user
     const lastLogin = await user_login_data.findOne(
-      { email: email.toLowerCase() },
+      { email: email.toLowerCase().trim() },
       { sort: { _id: -1 } }   // newest first (based on insertion order)
     );
 

@@ -105,6 +105,7 @@ app.post("/api/auth/login", async (req, res) => {
 
   let db_password = user.password;
   if(password!==db_password) {
+    console.log("incorrect user password")
     return res.json({
       success: false,
       message: "incorrect user password"
@@ -113,10 +114,10 @@ app.post("/api/auth/login", async (req, res) => {
 
   let user_login_data  = await getUserLastLoginData(email); let bal_diff;
   //console.log(user_login_data)
-  if(user_login_data) {
+  if(user_login_data.success == true) {
     bal_diff = user.balData.bal - user_login_data.data.bal;
   } else {
-    console.log(user_login_data.message)
+    console.log('No previous login data found for:', email);
   }
 
   console.log({
