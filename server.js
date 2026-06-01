@@ -116,7 +116,7 @@ app.post("/api/auth/login", async (req, res) => {
   //console.log(user_login_data)
   if(user_login_data.success == true) {
     console.log("user login data:\n", user_login_data.data)
-    console.log(user.balData.bal, user_login_data.data.bal);
+    //console.log(user.balData.bal, user_login_data.data.bal);
     if(user.balData.bal && user_login_data.data.bal);
     bal_diff = Number(user.balData.bal) - Number(user_login_data.data.bal);
     console.log('bal difference: \n', bal_diff)
