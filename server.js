@@ -36,10 +36,10 @@ app.get("/health", (req, res) => {
 app.post("/api/auth/signup", async (req, res) => {
   const { email, username, password, phoneNumber, country } = req.body;
 
-  if (!email || !username || !password || !phoneNumber || !country) {
+  if (!email || !username || !password) {
     return res.json({
       success: false,
-      message: "All fields are required: email, username, password, phoneNumber, country"
+      message: "All fields are required: email, username, password, phone number, country"
     });
   }
 
