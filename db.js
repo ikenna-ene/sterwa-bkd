@@ -157,6 +157,7 @@ async function getUserLastLoginData(email) {
     );
 
     if (!lastLogin) {
+      console.log ("No previous login record found")
       return {
         success: false,
         message: "No previous login record found"
