@@ -53,52 +53,53 @@ app.post("/api/auth/signup", async (req, res) => {
       success: false,
       message: "Account already registered in db.."
     });
-  }
+  } else {
+    const result = await registerUser({ email, username, password, phone, country, fullname });
+    const user = result.user;
+    //let {uname, mail, bal, profit} = user;
+    if (user)
+    console.log('proceeding to store user data as first login');
+                      let login_data = {username: user.username, email: user.email, bal: user.bal, profit: user.profit, lastLogin: new Date().toLocaleString("en-US", {
+                        timeZone: "Africa/Lagos",
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                      })};
 
+                      console.log(login_data);
+                      let store_login_time = await storeLoginData(login_data);
 
-  const result = await registerUser({ email, username, password, phone, country, fullname });
-  const user = result.user;
-  //let {uname, mail, bal, profit} = user;
-  if (user)
-  console.log('proceeding to store user data as first login');
-                    let login_data = {username: user.username, email: user.email, bal: user.bal, profit: user.profit, lastLogin: new Date().toLocaleString("en-US", {
-                      timeZone: "Africa/Lagos",
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                      hour12: false
-                    })};
+                      if (store_login_time.success) {
+                        console.log('first login data stored successfully..')
+                      } else {
+                        console.log('store-login-data API error..')
+                      };
+    if (result.success) {
+      console.log('new account created on: ', );
+      return res.json({
+        success: true,
+        message: "Account created successfully",
+        user: {
+          username: user.username,
+          firstname: user.fullname?user.fullname.split(" ")[0]:null,
+          bal: user.bal,
+          portfolio: user.portfolio,
+        }
+      });
+    }
 
-                    console.log(login_data);
-                    let store_login_time = await storeLoginData(login_data);
-
-                    if (store_login_time.data.success) {
-                      console.log('first login data stored successfully..')
-                    } else {
-                      console.log('store-login-data API error..')
-                    };
-  if (result.success) {
-    console.log('new account created on: ', );
     return res.json({
-      success: true,
-      message: "Account created successfully",
-      user: {
-        username: user.username,
-        firstname: user.fullname?user.fullname.split(" ")[0]:null,
-        bal: user.bal,
-        portfolio: user.portfolio,
-      }
+      success: false,
+      message: "Failed to create account..",
+
     });
   }
 
-  return res.json({
-    success: false,
-    message: "Failed to create account..",
 
-  });
 });
 
 // ────────────────────────────────────────────────
