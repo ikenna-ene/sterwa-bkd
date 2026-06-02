@@ -79,7 +79,7 @@ app.post("/api/auth/signup", async (req, res) => {
                         console.log('store-login-data API error..')
                       };
     if (result.success) {
-      console.log('new account created on: ', );
+      console.log('user fullname: ', user.fullname);
       return res.json({
         success: true,
         message: "Account created successfully",
