@@ -151,7 +151,7 @@ app.post("/api/auth/login", async (req, res) => {
     console.log('No previous login data found for:', email);
   }
 
-
+  console.log('user fullname: ', fullname);
 
   if( bal_diff!=undefined && bal_diff>0) {
 
